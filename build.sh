@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Building Vagrant base boxes"
 
 echo "Setup building area"
