@@ -1,11 +1,14 @@
 #!/bin/bash
 
+vagrant --version
+
 echo "Building Vagrant base boxes"
 
 echo "Setup building area"
+
 if [ -d "boxes" ]; then
   rm -rf boxes
-if
+fi
 
 mkdir boxes
 

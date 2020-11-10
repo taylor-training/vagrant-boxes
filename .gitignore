@@ -50,3 +50,6 @@ build-iPhoneSimulator/
 .rvmrc
 
 .vagrant
+
+/boxes
+*.box
