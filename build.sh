@@ -1,31 +1,27 @@
 #!/bin/bash
 
-vagrant --version
+dirname=$1
 
-echo "Building Vagrant base boxes"
+vagrant --version
 
 echo "Setup building area"
 
-if [ -d "boxes" ]; then
-  rm -rf boxes
+if [ ! -d "boxes" ]; then
+  mkdir boxes
 fi
 
-mkdir boxes
+if [ -f "boxes/$dirname.box" ]; then
+  echo "Deleting existing box: boxes/$dirname.box"
+  rm -f boxes/$dirname.box
+fi
 
-echo "Building Base Ubuntu Vagrant Box"
-cd ubuntu-base
+echo "Building Vagrant Box: $dirname"
+cd $dirname
 vagrant up
-vagrant package --output ../boxes/ubuntu-base.box
+vagrant package --output ../boxes/$dirname.box
+vagrant destroy -f
 cd ..
-vagrant box remove ubuntu-base
-vagrant box add ubuntu-base boxes/ubuntu-base.box
+vagrant box remove $dirname
+vagrant box add $dirname boxes/$dirname.box
 
-echo "Building Kubernetes Ubuntu Vagrant Box"
-cd ubuntu-k8s
-vagrant up
-vagrant package --output ../boxes/ubuntu-k8s.box
-cd ..
-vagrant box remove ubuntu-k8s
-vagrant box add ubuntu-k8s boxes/ubuntu-k8s.box
-
-echo "Completed building Vagrant base boxes"
+echo "Completed building Vagrant box: $dirname"
